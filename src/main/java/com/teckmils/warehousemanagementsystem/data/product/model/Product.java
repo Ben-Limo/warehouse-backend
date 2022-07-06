@@ -1,4 +1,4 @@
-package com.teckmils.warehousemanagementsystem.data.product;
+package com.teckmils.warehousemanagementsystem.data.product.model;
 
 import javax.persistence.*;
 import java.math.BigInteger;
