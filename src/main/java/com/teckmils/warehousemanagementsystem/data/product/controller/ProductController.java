@@ -2,11 +2,10 @@ package com.teckmils.warehousemanagementsystem.data.product.controller;
 
 import com.teckmils.warehousemanagementsystem.data.product.model.Product;
 import com.teckmils.warehousemanagementsystem.data.product.service.ProductService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -20,5 +19,10 @@ public class ProductController {
     @RequestMapping(path = "/products", method = RequestMethod.GET)
     public List<Product> getProducts() {
         return this.productService.getProducts();
+    }
+
+    @GetMapping("/products/{id}")
+    public Optional<Product> getProductById(@PathVariable Long id) {
+        return this.productService.getProductById(id);
     }
 }

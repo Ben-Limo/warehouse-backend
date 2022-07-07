@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -17,9 +18,10 @@ public class ProductService {
     }
 
     public List<Product> getProducts() {
-        Iterable<Product> products = this.productRepository.findAll();
-        List<Product> productList = new ArrayList<>();
-        products.forEach(product -> {productList.add(product);});
-        return productList;
+        return this.productRepository.findAll();
+    }
+
+    public Optional<Product> getProductById(Long id) {
+        return this.productRepository.findById(id);
     }
 }
