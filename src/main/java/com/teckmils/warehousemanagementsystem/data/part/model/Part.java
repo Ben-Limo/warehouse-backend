@@ -5,11 +5,12 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
+@Table(name = "parts")
 public class Part {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "uid", nullable = false)
-    private UUID uid;
+    private Long uid;
 
     @Column(name = "item_name", nullable = false)
     private String name;
@@ -27,11 +28,11 @@ public class Part {
         this.name = name;
     }
 
-    public UUID getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(UUID uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 
