@@ -2,6 +2,7 @@ package com.teckmils.warehousemanagementsystem.data.product.model;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "products")
@@ -17,12 +18,15 @@ public class Product {
     private Float price;
 
     @Column(name = "created_at", nullable = false)
-    private BigInteger createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private BigInteger updatedAt;
+    private Timestamp updatedAt;
 
-    public Product(String name, Float price, BigInteger createdAt, BigInteger updatedAt) {
+    public Product() {
+    }
+
+    public Product(String name, Float price, Timestamp createdAt, Timestamp updatedAt) {
         this.name = name;
         this.price = price;
         this.createdAt = createdAt;
@@ -53,19 +57,19 @@ public class Product {
         this.price = price;
     }
 
-    public BigInteger getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(BigInteger createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public BigInteger getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(BigInteger updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 
