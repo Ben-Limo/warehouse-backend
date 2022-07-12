@@ -3,18 +3,17 @@ package com.teckmils.warehousemanagementsystem.data.part.model;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Timestamp;
-import java.util.UUID;
 
+@Table(name = "part_stocks")
 @Entity
-@Table(name = "parts")
-public class Part {
+public class PartStock {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "item_name", nullable = false)
-    private String name;
+    @Column(name = "stock", nullable = false)
+    private BigInteger stock;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
@@ -22,18 +21,12 @@ public class Part {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @PrimaryKeyJoinColumn
-    private PartStock stock;
-
-    protected Part() {
+    public PartStock() {
     }
 
-    public Part(String name, PartStock stock, Timestamp createdAt) {
-        this.name = name;
-        this.setName(name);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(createdAt);
+    public PartStock(BigInteger stock, Timestamp createdAt) {
+        this.stock = stock;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -44,12 +37,12 @@ public class Part {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public BigInteger getStock() {
+        return stock;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStock(BigInteger stock) {
+        this.stock = stock;
     }
 
     public Timestamp getCreatedAt() {
@@ -68,19 +61,11 @@ public class Part {
         this.updatedAt = updatedAt;
     }
 
-    public void setPartStock(PartStock stock) {
-        this.stock = stock;
-    }
-
-    public BigInteger getPartStock() {
-        return this.stock.getStock();
-    }
-
     @Override
     public String toString() {
-        return "Part{" +
+        return "PartStock{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", stock=" + stock +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
