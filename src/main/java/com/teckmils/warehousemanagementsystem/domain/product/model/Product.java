@@ -1,20 +1,20 @@
-package com.teckmils.warehousemanagementsystem.data.part.model;
+package com.teckmils.warehousemanagementsystem.domain.product.model;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.sql.Timestamp;
-import java.util.UUID;
 
 @Entity
-@Table(name = "parts")
-public class Part {
+@Table(name = "products")
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "item_name", nullable = false)
     private String name;
+
+    @Column(name = "price", nullable = false)
+    private Float price;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
@@ -22,18 +22,14 @@ public class Part {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @PrimaryKeyJoinColumn
-    private PartStock stock;
-
-    protected Part() {
+    public Product() {
     }
 
-    public Part(String name, PartStock stock, Timestamp createdAt) {
+    public Product(String name, Float price, Timestamp createdAt, Timestamp updatedAt) {
         this.name = name;
-        this.setName(name);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(createdAt);
+        this.price = price;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -52,6 +48,14 @@ public class Part {
         this.name = name;
     }
 
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -68,19 +72,12 @@ public class Part {
         this.updatedAt = updatedAt;
     }
 
-    public void setPartStock(PartStock stock) {
-        this.stock = stock;
-    }
-
-    public BigInteger getPartStock() {
-        return this.stock.getStock();
-    }
-
     @Override
     public String toString() {
-        return "Part{" +
+        return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", price=" + price +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

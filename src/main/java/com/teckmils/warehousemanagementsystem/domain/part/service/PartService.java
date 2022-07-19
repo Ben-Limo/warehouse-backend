@@ -1,7 +1,7 @@
-package com.teckmils.warehousemanagementsystem.data.part.service;
+package com.teckmils.warehousemanagementsystem.domain.part.service;
 
-import com.teckmils.warehousemanagementsystem.data.part.model.Part;
-import com.teckmils.warehousemanagementsystem.data.part.repository.PartRepository;
+import com.teckmils.warehousemanagementsystem.domain.part.model.Part;
+import com.teckmils.warehousemanagementsystem.domain.part.repository.PartRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

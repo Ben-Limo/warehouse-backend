@@ -1,7 +1,7 @@
-package com.teckmils.warehousemanagementsystem.data.product.controller;
+package com.teckmils.warehousemanagementsystem.domain.product.controller;
 
-import com.teckmils.warehousemanagementsystem.data.product.model.Product;
-import com.teckmils.warehousemanagementsystem.data.product.service.ProductService;
+import com.teckmils.warehousemanagementsystem.domain.product.model.Product;
+import com.teckmils.warehousemanagementsystem.domain.product.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

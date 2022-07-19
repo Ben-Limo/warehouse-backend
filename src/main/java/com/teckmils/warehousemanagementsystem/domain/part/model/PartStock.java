@@ -1,21 +1,19 @@
-package com.teckmils.warehousemanagementsystem.data.product.model;
+package com.teckmils.warehousemanagementsystem.domain.part.model;
 
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 
+@Table(name = "part_stocks")
 @Entity
-@Table(name = "products")
-public class Product {
+public class PartStock {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "item_name", nullable = false)
-    private String name;
-
-    @Column(name = "price", nullable = false)
-    private Float price;
+    @Column(name = "stock", nullable = false)
+    private BigInteger stock;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
@@ -23,14 +21,12 @@ public class Product {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
-    public Product() {
+    public PartStock() {
     }
 
-    public Product(String name, Float price, Timestamp createdAt, Timestamp updatedAt) {
-        this.name = name;
-        this.price = price;
+    public PartStock(BigInteger stock, Timestamp createdAt) {
+        this.stock = stock;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -41,20 +37,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public BigInteger getStock() {
+        return stock;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Float getPrice() {
-        return price;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setStock(BigInteger stock) {
+        this.stock = stock;
     }
 
     public Timestamp getCreatedAt() {
@@ -75,10 +63,9 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "PartStock{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
+                ", stock=" + stock +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

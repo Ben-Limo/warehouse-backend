@@ -1,6 +1,6 @@
-package com.teckmils.warehousemanagementsystem.data.product.repository;
+package com.teckmils.warehousemanagementsystem.domain.product.repository;
 
-import com.teckmils.warehousemanagementsystem.data.product.model.Product;
+import com.teckmils.warehousemanagementsystem.domain.product.model.Product;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

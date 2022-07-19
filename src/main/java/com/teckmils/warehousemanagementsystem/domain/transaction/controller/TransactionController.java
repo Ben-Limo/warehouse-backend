@@ -1,12 +1,11 @@
-package com.teckmils.warehousemanagementsystem.data.transaction.controller;
+package com.teckmils.warehousemanagementsystem.domain.transaction.controller;
 
 
 import java.util.List;
 import java.util.Optional;
 
-import com.teckmils.warehousemanagementsystem.data.transaction.model.Transaction;
-import com.teckmils.warehousemanagementsystem.data.transaction.service.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.teckmils.warehousemanagementsystem.domain.transaction.model.Transaction;
+import com.teckmils.warehousemanagementsystem.domain.transaction.service.TransactionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

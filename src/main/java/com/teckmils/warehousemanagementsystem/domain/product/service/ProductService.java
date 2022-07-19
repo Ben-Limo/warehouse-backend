@@ -1,11 +1,9 @@
-package com.teckmils.warehousemanagementsystem.data.product.service;
+package com.teckmils.warehousemanagementsystem.domain.product.service;
 
-import com.teckmils.warehousemanagementsystem.data.product.model.Product;
-import com.teckmils.warehousemanagementsystem.data.product.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.teckmils.warehousemanagementsystem.domain.product.model.Product;
+import com.teckmils.warehousemanagementsystem.domain.product.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

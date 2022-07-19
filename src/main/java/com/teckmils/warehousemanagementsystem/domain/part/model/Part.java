@@ -1,19 +1,19 @@
-package com.teckmils.warehousemanagementsystem.data.part.model;
+package com.teckmils.warehousemanagementsystem.domain.part.model;
 
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 
-@Table(name = "part_stocks")
 @Entity
-public class PartStock {
+@Table(name = "parts")
+public class Part {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "stock", nullable = false)
-    private BigInteger stock;
+    @Column(name = "item_name", nullable = false)
+    private String name;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
@@ -21,12 +21,18 @@ public class PartStock {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
-    public PartStock() {
+    @OneToOne(fetch = FetchType.EAGER)
+    @PrimaryKeyJoinColumn
+    private PartStock stock;
+
+    protected Part() {
     }
 
-    public PartStock(BigInteger stock, Timestamp createdAt) {
-        this.stock = stock;
-        this.createdAt = createdAt;
+    public Part(String name, PartStock stock, Timestamp createdAt) {
+        this.name = name;
+        this.setName(name);
+        this.setCreatedAt(createdAt);
+        this.setUpdatedAt(createdAt);
     }
 
     public Long getId() {
@@ -37,12 +43,12 @@ public class PartStock {
         this.id = id;
     }
 
-    public BigInteger getStock() {
-        return stock;
+    public String getName() {
+        return name;
     }
 
-    public void setStock(BigInteger stock) {
-        this.stock = stock;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Timestamp getCreatedAt() {
@@ -61,11 +67,19 @@ public class PartStock {
         this.updatedAt = updatedAt;
     }
 
+    public void setPartStock(PartStock stock) {
+        this.stock = stock;
+    }
+
+    public BigInteger getPartStock() {
+        return this.stock.getStock();
+    }
+
     @Override
     public String toString() {
-        return "PartStock{" +
+        return "Part{" +
                 "id=" + id +
-                ", stock=" + stock +
+                ", name='" + name + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

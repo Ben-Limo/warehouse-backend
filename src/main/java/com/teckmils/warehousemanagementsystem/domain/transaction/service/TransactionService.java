@@ -1,12 +1,11 @@
-package com.teckmils.warehousemanagementsystem.data.transaction.service;
+package com.teckmils.warehousemanagementsystem.domain.transaction.service;
 
 
 import java.util.List;
 import java.util.Optional;
 
-import com.teckmils.warehousemanagementsystem.data.transaction.model.Transaction;
-import com.teckmils.warehousemanagementsystem.data.transaction.repository.TransactionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.teckmils.warehousemanagementsystem.domain.transaction.model.Transaction;
+import com.teckmils.warehousemanagementsystem.domain.transaction.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
 @Service
