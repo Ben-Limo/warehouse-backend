@@ -21,8 +21,7 @@ public class Part {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "part")
     private PartStock stock;
 
     protected Part() {
@@ -67,11 +66,11 @@ public class Part {
         this.updatedAt = updatedAt;
     }
 
-    public void setPartStock(PartStock stock) {
+    public void setStock(PartStock stock) {
         this.stock = stock;
     }
 
-    public BigInteger getPartStock() {
+    public Long getStock() {
         return this.stock.getStock();
     }
 

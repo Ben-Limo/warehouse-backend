@@ -13,7 +13,7 @@ public class PartStock {
     private Long id;
 
     @Column(name = "stock", nullable = false)
-    private BigInteger stock;
+    private Long stock;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
@@ -21,12 +21,20 @@ public class PartStock {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "part_id", referencedColumnName = "id", nullable = false)
+    private Part part;
+
     public PartStock() {
     }
 
-    public PartStock(BigInteger stock, Timestamp createdAt) {
+    public PartStock(Long stock, Part part) {
         this.stock = stock;
-        this.createdAt = createdAt;
+        this.part = part;
+    }
+
+    public PartStock(Long stock) {
+        this.stock = stock;
     }
 
     public Long getId() {
@@ -37,11 +45,11 @@ public class PartStock {
         this.id = id;
     }
 
-    public BigInteger getStock() {
+    public Long getStock() {
         return stock;
     }
 
-    public void setStock(BigInteger stock) {
+    public void setStock(Long stock) {
         this.stock = stock;
     }
 
