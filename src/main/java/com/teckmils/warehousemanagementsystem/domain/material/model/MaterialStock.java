@@ -1,19 +1,18 @@
-package com.teckmils.warehousemanagementsystem.domain.part.model;
+package com.teckmils.warehousemanagementsystem.domain.material.model;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 
+@Table(name = "materials_stock")
 @Entity
-@Table(name = "parts")
-public class Part {
+public class MaterialStock {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "item_name", nullable = false)
-    private String name;
+    @Column(name = "stock", nullable = false)
+    private Long stock;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
@@ -21,17 +20,20 @@ public class Part {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "part")
-    private PartStock stock;
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "material_id", referencedColumnName = "id", nullable = false)
+    private Material material;
 
-    protected Part() {
+    public MaterialStock() {
     }
 
-    public Part(String name, PartStock stock, Timestamp createdAt) {
-        this.name = name;
-        this.setName(name);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(createdAt);
+    public MaterialStock(Long stock, Material material) {
+        this.stock = stock;
+        this.material = material;
+    }
+
+    public MaterialStock(Long stock) {
+        this.stock = stock;
     }
 
     public Long getId() {
@@ -42,12 +44,12 @@ public class Part {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Long getStock() {
+        return stock;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStock(Long stock) {
+        this.stock = stock;
     }
 
     public Timestamp getCreatedAt() {
@@ -66,19 +68,11 @@ public class Part {
         this.updatedAt = updatedAt;
     }
 
-    public void setStock(PartStock stock) {
-        this.stock = stock;
-    }
-
-    public Long getStock() {
-        return this.stock.getStock();
-    }
-
     @Override
     public String toString() {
-        return "Part{" +
+        return "PartStock{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", stock=" + stock +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
