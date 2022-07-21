@@ -1,5 +1,7 @@
 package com.teckmils.warehousemanagementsystem.domain.product.model;
 
+import com.teckmils.warehousemanagementsystem.domain.category.model.Category;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Set;
@@ -25,6 +27,10 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ProductMaterial> materials;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
 
     public Product() {
     }
@@ -79,6 +85,15 @@ public class Product {
     public Set<ProductMaterial> getProductMaterials() {
         return this.materials;
     }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "Product{" +

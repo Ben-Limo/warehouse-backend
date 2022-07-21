@@ -1,13 +1,10 @@
 package com.teckmils.warehousemanagementsystem.domain.category.model;
 
+import com.teckmils.warehousemanagementsystem.domain.product.model.Product;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -32,6 +29,9 @@ public class Category {
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    @OneToOne(mappedBy = "category")
+    private Product product;
 
     public Category() {
     }
