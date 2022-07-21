@@ -16,15 +16,15 @@ public class MaterialService {
         this.materialRepository = materialRepository;
     }
 
-    public List<Material> getParts() {
-        Iterable<Material> parts = this.materialRepository.findAll();
+    public List<Material> getMaterials() {
+        Iterable<Material> materials = this.materialRepository.findAll();
         List<Material> materialList = new ArrayList<>();
-        parts.forEach(part -> {
-            materialList.add(part);});
+        materials.forEach(material -> {
+            materialList.add(material);});
         return materialList;
     }
 
-    public Optional<Material> getPartById(Long id) {
+    public Optional<Material> getMaterialById(Long id) {
         return this.materialRepository.findById(id);
     }
 }

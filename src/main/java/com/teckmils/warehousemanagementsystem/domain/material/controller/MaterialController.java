@@ -17,12 +17,12 @@ public class MaterialController {
     }
 
     @RequestMapping(path = "/materials", method = RequestMethod.GET)
-    public List<Material> getParts() {
-        return this.materialService.getParts();
+    public List<Material> getMaterials() {
+        return this.materialService.getMaterials();
     }
 
     @GetMapping("/materials/{id}")
-    public Optional<Material> getPart(@PathVariable Long id) {
-        return this.materialService.getPartById(id);
+    public Optional<Material> getMaterialById(@PathVariable Long id) {
+        return this.materialService.getMaterialById(id);
     }
 }
