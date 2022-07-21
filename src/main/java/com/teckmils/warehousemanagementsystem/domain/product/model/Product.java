@@ -2,6 +2,7 @@ package com.teckmils.warehousemanagementsystem.domain.product.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -21,6 +22,9 @@ public class Product {
 
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ProductMaterial> materials;
 
     public Product() {
     }
@@ -72,6 +76,9 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
+    public Set<ProductMaterial> getProductMaterials() {
+        return this.materials;
+    }
     @Override
     public String toString() {
         return "Product{" +
