@@ -1,5 +1,6 @@
 package com.teckmils.warehousemanagementsystem.domain.material.controller;
 
+import com.teckmils.warehousemanagementsystem.domain.material.dto.MaterialStockDTO;
 import com.teckmils.warehousemanagementsystem.domain.material.model.Material;
 import com.teckmils.warehousemanagementsystem.domain.material.service.MaterialService;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,12 @@ public class MaterialController {
     }
 
     @RequestMapping(path = "/materials", method = RequestMethod.GET)
-    public List<Material> getMaterials() {
+    public List<MaterialStockDTO> getMaterials() {
         return this.materialService.getMaterials();
     }
 
     @GetMapping("/materials/{id}")
-    public Optional<Material> getMaterialById(@PathVariable Long id) {
+    public MaterialStockDTO getMaterialById(@PathVariable Long id) {
         return this.materialService.getMaterialById(id);
     }
 }

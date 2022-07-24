@@ -69,8 +69,8 @@ public class Material {
         this.stock = stock;
     }
 
-    public Long getStock() {
-        return this.stock.getStock();
+    public MaterialStock getStock() {
+        return stock;
     }
 
     @Override
