@@ -6,6 +6,7 @@ import com.teckmils.warehousemanagementsystem.domain.material.model.Material;
 import com.teckmils.warehousemanagementsystem.domain.material.model.MaterialStock;
 import com.teckmils.warehousemanagementsystem.domain.material.repository.MaterialRepository;
 import com.teckmils.warehousemanagementsystem.domain.material.repository.MaterialStockRepository;
+import com.teckmils.warehousemanagementsystem.domain.product.repository.ProductMaterialRepository;
 import com.teckmils.warehousemanagementsystem.domain.product.repository.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,16 @@ public class MaterialService {
     private final MaterialRepository materialRepository;
     private final MaterialStockRepository materialStockRepository;
 
+    private final ProductMaterialRepository productMaterialRepository;
+
     public MaterialService(
             MaterialRepository materialRepository,
-            MaterialStockRepository materialStockRepository
+            MaterialStockRepository materialStockRepository,
+            ProductMaterialRepository productMaterialRepository
            ) {
         this.materialRepository = materialRepository;
         this.materialStockRepository = materialStockRepository;
+        this.productMaterialRepository = productMaterialRepository;
     }
 
     public List<MaterialStockDTO> getMaterials() {
@@ -73,5 +78,6 @@ public class MaterialService {
     public void deleteMaterialById(final UUID id) {
         this.materialRepository.deleteById(id);
         this.materialStockRepository.deleteByMaterialId(id);
+        this.productMaterialRepository.deleteByMaterialId(id);
     }
 }
