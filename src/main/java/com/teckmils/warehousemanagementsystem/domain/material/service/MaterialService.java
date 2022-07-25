@@ -6,6 +6,7 @@ import com.teckmils.warehousemanagementsystem.domain.material.model.Material;
 import com.teckmils.warehousemanagementsystem.domain.material.model.MaterialStock;
 import com.teckmils.warehousemanagementsystem.domain.material.repository.MaterialRepository;
 import com.teckmils.warehousemanagementsystem.domain.material.repository.MaterialStockRepository;
+import com.teckmils.warehousemanagementsystem.domain.product.repository.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,7 +21,11 @@ import java.util.stream.Collectors;
 public class MaterialService {
     private final MaterialRepository materialRepository;
     private final MaterialStockRepository materialStockRepository;
-    public MaterialService(MaterialRepository materialRepository, MaterialStockRepository materialStockRepository) {
+
+    public MaterialService(
+            MaterialRepository materialRepository,
+            MaterialStockRepository materialStockRepository
+           ) {
         this.materialRepository = materialRepository;
         this.materialStockRepository = materialStockRepository;
     }
@@ -68,5 +73,8 @@ public class MaterialService {
         rawMaterials.forEach(this::addSingleMaterial);
     }
 
-
+    public void deleteMaterialById(final Long id) {
+        this.materialRepository.deleteById(id);
+        this.materialStockRepository.deleteByMaterialId(id);
+    }
 }

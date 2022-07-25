@@ -2,6 +2,7 @@ package com.teckmils.warehousemanagementsystem.domain.material.repository;
 
 import com.teckmils.warehousemanagementsystem.domain.material.model.Material;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
     Optional<Material> findById(Long id);
 
     List<Material> findAll();
+
+    void deleteById(@NonNull Long id);
 }

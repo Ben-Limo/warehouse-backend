@@ -7,6 +7,7 @@ import com.teckmils.warehousemanagementsystem.domain.material.service.MaterialSe
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,5 +33,10 @@ public class MaterialController {
     @PostMapping("/materials")
     public void addMaterials(@RequestBody @Valid final AddListOfMaterials materials) {
         this.materialService.addMaterials(materials.inventory());
+    }
+
+    @DeleteMapping("/materials/{id}")
+    public void deleteMaterial(@PathVariable @NotNull final  Long id) {
+        this.materialService.deleteMaterialById(id);
     }
 }
