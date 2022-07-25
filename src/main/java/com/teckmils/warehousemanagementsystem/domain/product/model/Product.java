@@ -5,13 +5,14 @@ import com.teckmils.warehousemanagementsystem.domain.category.model.Category;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private UUID id;
 
     @Column(name = "item_name", nullable = false)
     private String name;
@@ -42,12 +43,8 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CategoryService {
@@ -19,7 +20,7 @@ public class CategoryService {
         return this.categoryRepository.findAll();
     }
 
-    public Optional<Category> getCategoryById(Long Id) {
+    public Optional<Category> getCategoryById(UUID Id) {
         return this.categoryRepository.findById(Id);
     }
 }

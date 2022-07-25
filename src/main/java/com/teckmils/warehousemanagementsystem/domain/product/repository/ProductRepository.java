@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface ProductRepository extends CrudRepository<Product, Long> {
-    Optional<Product> findById(Long id);
+public interface ProductRepository extends CrudRepository<Product, UUID> {
+    Optional<Product> findById(UUID id);
 
     List<Product> findAll();
 }

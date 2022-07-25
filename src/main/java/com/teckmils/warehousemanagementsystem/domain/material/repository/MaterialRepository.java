@@ -7,13 +7,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface MaterialRepository extends JpaRepository<Material, Long> {
+public interface MaterialRepository extends JpaRepository<Material, UUID> {
 
-    Optional<Material> findById(Long id);
+    Optional<Material> findById(UUID id);
 
     List<Material> findAll();
 
-    void deleteById(@NonNull Long id);
+    void deleteById(@NonNull UUID id);
 }

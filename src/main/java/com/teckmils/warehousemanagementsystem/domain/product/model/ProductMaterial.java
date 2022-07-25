@@ -4,6 +4,7 @@ import com.teckmils.warehousemanagementsystem.domain.material.model.Material;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Table(name = "product_materials")
 @Entity
@@ -11,7 +12,7 @@ public class ProductMaterial {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private UUID id;
 
     @Column(name = "count", nullable = false)
     private Long count;

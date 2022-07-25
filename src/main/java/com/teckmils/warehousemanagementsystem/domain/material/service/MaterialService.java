@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,7 +43,7 @@ public class MaterialService {
 
 
 
-    public MaterialStockDTO getMaterialById(Long id) {
+    public MaterialStockDTO getMaterialById(UUID id) {
         final Material material = this.materialRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -73,7 +70,7 @@ public class MaterialService {
         rawMaterials.forEach(this::addSingleMaterial);
     }
 
-    public void deleteMaterialById(final Long id) {
+    public void deleteMaterialById(final UUID id) {
         this.materialRepository.deleteById(id);
         this.materialStockRepository.deleteByMaterialId(id);
     }

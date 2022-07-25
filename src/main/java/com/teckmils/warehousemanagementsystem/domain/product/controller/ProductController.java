@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -22,7 +23,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public Optional<Product> getProductById(@PathVariable Long id) {
+    public Optional<Product> getProductById(@PathVariable UUID id) {
         return this.productService.getProductById(id);
     }
 }

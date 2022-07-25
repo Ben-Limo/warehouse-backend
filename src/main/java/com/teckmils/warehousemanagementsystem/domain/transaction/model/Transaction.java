@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity
 @Table(name = "transactions")
@@ -15,7 +16,7 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    private UUID id;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
@@ -23,12 +24,8 @@ public class Transaction {
     protected Transaction() {
     }
 
-    public Long getId() {
+    public UUID getId() {
         return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Timestamp getCreatedAt() {

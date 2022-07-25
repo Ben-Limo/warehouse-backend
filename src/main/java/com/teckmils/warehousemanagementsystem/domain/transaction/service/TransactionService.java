@@ -3,6 +3,7 @@ package com.teckmils.warehousemanagementsystem.domain.transaction.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.teckmils.warehousemanagementsystem.domain.transaction.model.Transaction;
 import com.teckmils.warehousemanagementsystem.domain.transaction.repository.TransactionRepository;
@@ -20,7 +21,7 @@ public class TransactionService {
         return this.transactionRepository.findAll();
     }
 
-    public Optional<Transaction> getTransactionByID(Long id) {
+    public Optional<Transaction> getTransactionByID(UUID id) {
         return this.transactionRepository.findById(id);
     }
 }

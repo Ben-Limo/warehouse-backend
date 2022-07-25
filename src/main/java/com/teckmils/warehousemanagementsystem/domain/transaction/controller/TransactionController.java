@@ -3,6 +3,7 @@ package com.teckmils.warehousemanagementsystem.domain.transaction.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.teckmils.warehousemanagementsystem.domain.transaction.model.Transaction;
 import com.teckmils.warehousemanagementsystem.domain.transaction.service.TransactionService;
@@ -26,7 +27,7 @@ public class TransactionController {
     }
 
     @GetMapping("/transactions/{id}")
-    public Optional<Transaction> getTransaction(@PathVariable Long id) {
+    public Optional<Transaction> getTransaction(@PathVariable UUID id) {
         return this.transactionService.getTransactionByID(id);
     }
 }

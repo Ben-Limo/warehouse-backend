@@ -6,9 +6,10 @@ import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
-public interface MaterialStockRepository extends CrudRepository<MaterialStock, Long> {
+public interface MaterialStockRepository extends CrudRepository<MaterialStock, UUID> {
     List<MaterialStock> findAll();
 
-    void deleteByMaterialId(@NonNull Long id);
+    void deleteByMaterialId(@NonNull UUID id);
 }

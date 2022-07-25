@@ -14,7 +14,7 @@ public class Category {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
-    private Long id;
+    private UUID id;
 
     @Column(name = "item_name", nullable = false)
     private String name;
@@ -41,7 +41,7 @@ public class Category {
         this.description = description;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return this.id;
     }
 

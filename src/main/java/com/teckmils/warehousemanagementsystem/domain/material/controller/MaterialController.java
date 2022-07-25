@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -26,7 +27,7 @@ public class MaterialController {
     }
 
     @GetMapping("/materials/{id}")
-    public MaterialStockDTO getMaterialById(@PathVariable Long id) {
+    public MaterialStockDTO getMaterialById(@PathVariable UUID id) {
         return this.materialService.getMaterialById(id);
     }
 
@@ -36,7 +37,7 @@ public class MaterialController {
     }
 
     @DeleteMapping("/materials/{id}")
-    public void deleteMaterial(@PathVariable @NotNull final  Long id) {
+    public void deleteMaterial(@PathVariable @NotNull final UUID id) {
         this.materialService.deleteMaterialById(id);
     }
 }

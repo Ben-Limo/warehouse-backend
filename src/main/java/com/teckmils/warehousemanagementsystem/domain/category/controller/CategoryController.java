@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -22,7 +23,7 @@ public class CategoryController {
     }
 
     @GetMapping("/categories/{id}")
-    public Optional<Category> getCategoryById(@PathVariable Long id) {
+    public Optional<Category> getCategoryById(@PathVariable UUID id) {
         return this.categoryService.getCategoryById(id);
     }
 }
