@@ -1,5 +1,8 @@
 package com.teckmils.warehousemanagementsystem.domain.material.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -12,12 +15,14 @@ public class MaterialStock {
     private Long id;
 
     @Column(name = "stock", nullable = false)
-    private Long stock;
+    private long stock;
 
     @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
     private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false)
+    @UpdateTimestamp
     private Timestamp updatedAt;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -27,12 +32,12 @@ public class MaterialStock {
     public MaterialStock() {
     }
 
-    public MaterialStock(Long stock, Material material) {
+    public MaterialStock(final Material material, long stock) {
         this.stock = stock;
         this.material = material;
     }
 
-    public MaterialStock(Long stock) {
+    public MaterialStock(final long stock) {
         this.stock = stock;
     }
 
@@ -44,11 +49,11 @@ public class MaterialStock {
         this.id = id;
     }
 
-    public Long getStock() {
+    public long getStock() {
         return stock;
     }
 
-    public void setStock(Long stock) {
+    public void setStock(long stock) {
         this.stock = stock;
     }
 
@@ -70,7 +75,7 @@ public class MaterialStock {
 
     @Override
     public String toString() {
-        return "PartStock{" +
+        return "MaterialStock{" +
                 "id=" + id +
                 ", stock=" + stock +
                 ", createdAt=" + createdAt +

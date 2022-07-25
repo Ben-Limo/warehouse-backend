@@ -1,6 +1,10 @@
 package com.teckmils.warehousemanagementsystem.domain.material.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
 @Entity
@@ -15,22 +19,21 @@ public class Material {
     private String name;
 
     @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
     private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false)
+    @UpdateTimestamp
     private Timestamp updatedAt;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "material")
     private MaterialStock stock;
 
-    protected Material() {
+    public Material() {
     }
 
-    public Material(String name, MaterialStock stock, Timestamp createdAt) {
+    public Material(String name) {
         this.name = name;
-        this.setName(name);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(createdAt);
     }
 
     public Long getId() {
@@ -75,7 +78,7 @@ public class Material {
 
     @Override
     public String toString() {
-        return "Part{" +
+        return "Material{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", createdAt=" + createdAt +
