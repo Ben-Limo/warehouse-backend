@@ -26,11 +26,17 @@ public class MaterialService {
     }
 
     public List<MaterialStockDTO> getMaterials() {
-        return ((List<MaterialStockDTO>) materialRepository
-                .findAll()
-                .stream().
-                map(this::convertDataIntoDTO).
-                collect(Collectors.toList()));
+        final List<Material> materials = this.materialRepository.findAll();
+        List<MaterialStockDTO> materialStockDTOS = new ArrayList<>();
+        materials.forEach(material -> materialStockDTOS.add(new MaterialStockDTO(
+                        material.getId(),
+                        material.getName(),
+                        material.getStock(),
+                        material.getCreatedAt(),
+                        material.getUpdatedAt()
+        )));
+
+        return materialStockDTOS;
     }
 
 
@@ -39,7 +45,13 @@ public class MaterialService {
         final Material material = this.materialRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return convertDataIntoDTO(material);
+        return new MaterialStockDTO(
+                material.getId(),
+                material.getName(),
+                material.getStock(),
+                material.getCreatedAt(),
+                material.getUpdatedAt()
+        );
     }
 
     private void addSingleMaterial(final AddMaterialStockItem rawMaterial) {
@@ -56,20 +68,5 @@ public class MaterialService {
         rawMaterials.forEach(this::addSingleMaterial);
     }
 
-    private MaterialStockDTO convertDataIntoDTO (Material materialData) {
-        MaterialStockDTO materialStockDTO = new MaterialStockDTO();
 
-        materialStockDTO.setId(materialData.getId());
-        materialStockDTO.setName(materialData.getName());
-        materialStockDTO.setCreatedAt(materialData.getCreatedAt());
-        materialStockDTO.setUpdatedAt(materialData.getUpdatedAt());
-
-        //create instance of the MaterialStock class
-        MaterialStock materialStock = materialData.getStock();
-
-        // set the stock value
-        materialStockDTO.setStock(materialStock.getStock());
-
-        return materialStockDTO;
-    }
 }

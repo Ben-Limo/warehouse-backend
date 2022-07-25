@@ -69,11 +69,22 @@ public class Material {
     }
 
     public void setStock(MaterialStock stock) {
-        this.stock = stock;
+        if(this.stock == null) {
+            this.stock = stock;
+        }
+        else if (stock == null) {
+            this.stock.setStock(0L);
+        }
+        else {
+            this.stock.setStock(stock.getStock());
+        }
+
     }
 
-    public MaterialStock getStock() {
-        return stock;
+    public long getStock() {
+        if (this.stock == null) return 0L;
+
+        return stock.getStock();
     }
 
     @Override
