@@ -1,6 +1,8 @@
 package com.teckmils.warehousemanagementsystem.domain.product.model;
 
 import com.teckmils.warehousemanagementsystem.domain.material.model.Material;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -18,9 +20,11 @@ public class ProductMaterial {
     private Long count;
 
     @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
     private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false)
+    @UpdateTimestamp
     private Timestamp updatedAt;
 
     @ManyToOne
@@ -34,7 +38,7 @@ public class ProductMaterial {
     public ProductMaterial() {
     }
 
-    public ProductMaterial(Long count, Material material, Product product) {
+    public ProductMaterial(final Product product, Material material, final long count) {
         this.count = count;
         this.material = material;
         this.product = product;

@@ -1,11 +1,13 @@
 package com.teckmils.warehousemanagementsystem.domain.product.model;
 
 import com.teckmils.warehousemanagementsystem.domain.category.model.Category;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.swing.text.html.Option;
 import java.sql.Timestamp;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "products")
@@ -18,15 +20,17 @@ public class Product {
     private String name;
 
     @Column(name = "price", nullable = false)
-    private Float price;
+    private Double price;
 
     @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
     private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false)
+    @UpdateTimestamp
     private Timestamp updatedAt;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ProductMaterial> materials;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -36,11 +40,10 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, Float price, Timestamp createdAt, Timestamp updatedAt) {
+    public Product(final String name, final Double price, final Category category) {
         this.name = name;
         this.price = price;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.category = category;
     }
 
     public UUID getId() {
@@ -55,11 +58,11 @@ public class Product {
         this.name = name;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -89,6 +92,34 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public long getCalculatedProductStock() {
+        final Collection<Long> listOfPossibleProducts = new ArrayList<>();
+        if(this.materials == null || this.materials.isEmpty()) {
+            return 0L;
+        }
+
+        this.materials.forEach(material -> {
+            final long materialsRequested = material.getCount();
+            final long availableMaterials = material.getMaterial().getStock();
+
+            if(availableMaterials >= materialsRequested) {
+                listOfPossibleProducts.add(availableMaterials/materialsRequested);
+            }
+        });
+
+        if(listOfPossibleProducts.size() != this.materials.size()) {
+            return 0l;
+        }
+
+        final Optional<Long> minAmountPossible = listOfPossibleProducts.stream().min(Comparator.naturalOrder());
+
+        if(minAmountPossible.isEmpty()) {
+            return 0L;
+        }
+
+        return minAmountPossible.get();
     }
 
     @Override
