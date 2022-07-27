@@ -1,4 +1,4 @@
-package com.teckmils.warehousemanagementsystem;
+package com.teckmils.warehousemanagementsystem.security;
 
 import com.teckmils.warehousemanagementsystem.domain.user.UserRole;
 import com.teckmils.warehousemanagementsystem.domain.user.service.UserService;
@@ -30,7 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(final HttpSecurity http) throws
-            Exception {http
+            Exception {
+        http
             .csrf().disable()
             .authorizeRequests()
             .antMatchers("/api/auth/**").permitAll()
