@@ -1,5 +1,6 @@
 package com.teckmils.warehousemanagementsystem.domain.user.service;
 
+import com.teckmils.warehousemanagementsystem.domain.store.repository.StoreRepository;
 import com.teckmils.warehousemanagementsystem.domain.user.dto.UpdateUser;
 import com.teckmils.warehousemanagementsystem.domain.user.dto.UserResponse;
 import com.teckmils.warehousemanagementsystem.domain.user.model.User;
@@ -23,9 +24,14 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    public UserService(final UserRepository userRepository, final RoleRepository roleRepository) {
+    private final StoreRepository storeRepository;
+
+    public UserService(final UserRepository userRepository,
+                       final RoleRepository roleRepository,
+                       StoreRepository storeRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.storeRepository = storeRepository;
     }
 
     public List<UserResponse> getUsers() {
@@ -36,8 +42,11 @@ public class UserService implements UserDetailsService {
                 new UserResponse(
                         user.getId(),
                         user.getUserName(),
+                        user.getFirstName(),
+                        user.getLastName(),
                         user.getEmail(),
                         user.getRole().getItemName(),
+                        user.getStore().getStoreName(),
                         user.getCreatedAt(),
                         user.getUpdatedAt()
                 )
@@ -53,8 +62,11 @@ public class UserService implements UserDetailsService {
         return new UserResponse(
                 user.getId(),
                 user.getUserName(),
+                user.getFirstName(),
+                user.getLastName(),
                 user.getEmail(),
                 user.getRole().getItemName(),
+                user.getStore().getStoreName(),
                 user.getCreatedAt(),
                 user.getUpdatedAt()
         );
@@ -65,20 +77,39 @@ public class UserService implements UserDetailsService {
         return new ResponseEntity<>("User deleted successfully!", HttpStatus.OK);
     }
 
-    public ResponseEntity<String> updateUserRole(final UpdateUser request) {
+    public ResponseEntity<String> updateUser(final UpdateUser request) {
         final var email = request.email();
         return this.userRepository.findByEmail(email)
-                .map(u -> this.updateRole(u, request.role()))
+                .map(u -> this.updateUser(u,
+                        request.role(),
+                        request.firstName(),
+                        request.lastName(),
+                        request.email(),
+                        request.manager(),
+                        request.store()))
                 .orElseThrow(() -> new UsernameNotFoundException("could not find email: " + email));
 
     }
 
-    private ResponseEntity<String> updateRole(final User user, final String updateRole) {
+    private ResponseEntity<String> updateUser(final User user,
+                                              final String updateRole,
+                                              final String updateFName,
+                                              final String updateLName,
+                                              final String updateEmail,
+                                              final UUID updateManager,
+                                              final UUID updateStore) {
         final var role = this.roleRepository.findByItemName(updateRole.toUpperCase())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        final var store = this.storeRepository.findById(updateStore)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        user.setFirstName(updateFName);
+        user.setLastName(updateLName);
+        user.setEmail(updateEmail);
+        user.setManagerId(updateManager);
+        user.setStore(store);
         user.setRole(role);
         this.userRepository.save(user);
-        return new ResponseEntity<>("Role updated successfully!", HttpStatus.OK);
+        return new ResponseEntity<>("User updated successfully!", HttpStatus.OK);
     }
 
     @Override

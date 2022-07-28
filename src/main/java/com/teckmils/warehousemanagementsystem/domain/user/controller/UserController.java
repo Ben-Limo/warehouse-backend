@@ -28,9 +28,9 @@ public class UserController {
         return this.userService.getUserById(id);
     }
 
-    @PatchMapping("/api/users/update-role")
-    public ResponseEntity<String> updateRole(@RequestBody final UpdateUser request) {
-        return this.userService.updateUserRole(request);
+    @PatchMapping("/api/users/update-user")
+    public ResponseEntity<String> updateUser(@RequestBody final UpdateUser request) {
+        return this.userService.updateUser(request);
     }
 
     @DeleteMapping("/api/users/{uid}")

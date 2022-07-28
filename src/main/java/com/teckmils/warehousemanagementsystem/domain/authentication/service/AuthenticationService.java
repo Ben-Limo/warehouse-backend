@@ -1,6 +1,8 @@
 package com.teckmils.warehousemanagementsystem.domain.authentication.service;
 
 import com.teckmils.warehousemanagementsystem.domain.authentication.dto.RegisterRequest;
+import com.teckmils.warehousemanagementsystem.domain.store.model.Store;
+import com.teckmils.warehousemanagementsystem.domain.store.repository.StoreRepository;
 import com.teckmils.warehousemanagementsystem.domain.user.UserRole;
 import com.teckmils.warehousemanagementsystem.domain.user.model.Role;
 import com.teckmils.warehousemanagementsystem.domain.user.model.User;
@@ -29,6 +31,7 @@ public class AuthenticationService {
 
     private final RoleRepository roleRepository;
 
+    private final StoreRepository storeRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -38,11 +41,13 @@ public class AuthenticationService {
     public AuthenticationService(final AuthenticationManager authenticationManager,
                            final UserRepository userRepository,
                            final RoleRepository roleRepository,
-                           final PasswordEncoder passwordEncoder){
+                           final PasswordEncoder passwordEncoder,
+                           final StoreRepository storeRepository){
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.storeRepository = storeRepository;
     }
 
     public ResponseEntity<String> authenticateUser(final String email, final String password) {
@@ -64,17 +69,25 @@ public class AuthenticationService {
 
         final var user = new User();
 
-        user.setUserName(registerRequest.name());
+        user.setUserName(registerRequest.userName());
+        user.setFirstName(registerRequest.firstName());
+        user.setLastName(registerRequest.lastName());
         user.setEmail(registerRequest.email());
         user.setPassword(this.passwordEncoder.encode(registerRequest.password()));
 
         final Optional<Role> role = this.roleRepository.findByItemName(UserRole.READ_ONLY);
 
+        final Optional<Store> store = this.storeRepository.findByStoreName(registerRequest.storeName());
+
         if (role.isEmpty()) {
             return new ResponseEntity<>("No suitable roles found for user! Check your database for roles!", HttpStatus.BAD_REQUEST);
         }
 
+        if (store.isEmpty())
+            return new ResponseEntity<>("No Store found with that name: " + registerRequest.storeName(),HttpStatus.BAD_REQUEST);
+
         user.setRole(role.get());
+        user.setStore(store.get());
 
         this.userRepository.save(user);
 

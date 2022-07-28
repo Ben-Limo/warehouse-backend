@@ -1,5 +1,6 @@
 package com.teckmils.warehousemanagementsystem.domain.user.model;
 
+import com.teckmils.warehousemanagementsystem.domain.store.model.Store;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,6 +18,15 @@ public class User {
 
     @Column(name = "user_name", nullable = false)
     private String userName;
+
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+
+    @Column(name = "manager_id")
+    private UUID managerId;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -36,6 +46,10 @@ public class User {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "store_id", referencedColumnName = "id")
+    private Store store;
+
     @Column(name = "token")
     private String token;
 
@@ -52,6 +66,30 @@ public class User {
 
     public void setUserName(final String userName) {
         this.userName = userName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(final String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(final String lastName) {
+        this.lastName = lastName;
+    }
+
+    public UUID getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(final UUID managerId) {
+        this.managerId = managerId;
     }
 
     public String getEmail() {
@@ -84,6 +122,14 @@ public class User {
 
     public void setRole(final Role role) {
         this.role = role;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(final Store store) {
+        this.store = store;
     }
 
     public String getToken() {

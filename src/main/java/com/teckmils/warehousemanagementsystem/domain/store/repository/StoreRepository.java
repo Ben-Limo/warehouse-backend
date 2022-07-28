@@ -14,6 +14,8 @@ import java.util.UUID;
 public interface StoreRepository extends CrudRepository<Store, UUID> {
     Optional<Store> findById(UUID id);
 
+    Optional<Store> findByStoreName(String storeName);
+
     List<Store> findAll();
 
     void deleteById(@NonNull UUID id);
