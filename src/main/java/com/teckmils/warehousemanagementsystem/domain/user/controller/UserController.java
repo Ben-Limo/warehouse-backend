@@ -33,8 +33,8 @@ public class UserController {
         return this.userService.updateUser(request);
     }
 
-    @DeleteMapping("/api/users/{uid}")
-    public ResponseEntity<String> deleteUser(@PathVariable @NotNull final UUID uid) {
-        return this.userService.deleteUserByUid(uid);
+    @DeleteMapping("/api/users/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable @NotNull final UUID id) {
+        return this.userService.deleteUserByUid(id);
     }
 }
