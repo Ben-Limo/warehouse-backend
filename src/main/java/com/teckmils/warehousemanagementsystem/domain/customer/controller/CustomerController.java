@@ -2,11 +2,8 @@ package com.teckmils.warehousemanagementsystem.domain.customer.controller;
 
 import com.teckmils.warehousemanagementsystem.domain.customer.dto.AddCustomer;
 import com.teckmils.warehousemanagementsystem.domain.customer.dto.CustomerRespItem;
-import com.teckmils.warehousemanagementsystem.domain.customer.dto.UpdateCustomer;
+import com.teckmils.warehousemanagementsystem.domain.customer.dto.CustomerItem;
 import com.teckmils.warehousemanagementsystem.domain.customer.service.CustomerService;
-import com.teckmils.warehousemanagementsystem.domain.material.dto.AddListOfMaterials;
-import com.teckmils.warehousemanagementsystem.domain.user.dto.UpdateUser;
-import com.teckmils.warehousemanagementsystem.domain.user.dto.UserResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +36,7 @@ public class CustomerController {
     }
 
     @PatchMapping("/api/customers/update-customer")
-    public ResponseEntity<String> updateCustomer(@RequestBody final UpdateCustomer request) {
+    public ResponseEntity<String> updateCustomer(@RequestBody final CustomerItem request) {
         return this.customerService.updateCustomer(request);
     }
 

@@ -2,32 +2,50 @@ package com.teckmils.warehousemanagementsystem.domain.transaction.controller;
 
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
+
+import com.teckmils.warehousemanagementsystem.domain.customer.dto.CustomerItem;
+import com.teckmils.warehousemanagementsystem.domain.product.dto.AddProduct;
+import com.teckmils.warehousemanagementsystem.domain.product.dto.SellProducts;
+import com.teckmils.warehousemanagementsystem.domain.transaction.dto.CreateTransactionItem;
+import com.teckmils.warehousemanagementsystem.domain.transaction.dto.TransactionResponseItem;
 import com.teckmils.warehousemanagementsystem.domain.transaction.model.Transaction;
 import com.teckmils.warehousemanagementsystem.domain.transaction.service.TransactionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api")
 public class TransactionController {
     private final TransactionService transactionService;
-
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
     }
 
     @GetMapping("/transactions")
-    public List<Transaction> getTransactions() {
+    public List<TransactionResponseItem> getTransactions() {
         return this.transactionService.getTransactions();
     }
 
     @GetMapping("/transactions/{id}")
-    public Optional<Transaction> getTransaction(@PathVariable UUID id) {
+    public TransactionResponseItem getTransaction(@PathVariable UUID id) {
         return this.transactionService.getTransactionByID(id);
     }
+
+    @PostMapping("/transactions")
+    public void createTransaction(
+            @RequestBody @Valid SellProducts request,
+            Authentication authentication
+            ) {
+
+        this.transactionService.createTransaction(
+                request,
+                authentication);
+    }
+
 }

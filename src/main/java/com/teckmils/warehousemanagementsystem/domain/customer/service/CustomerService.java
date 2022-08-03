@@ -1,21 +1,11 @@
 package com.teckmils.warehousemanagementsystem.domain.customer.service;
 
-import com.teckmils.warehousemanagementsystem.domain.category.model.Category;
 import com.teckmils.warehousemanagementsystem.domain.customer.dto.CustomerRespItem;
-import com.teckmils.warehousemanagementsystem.domain.customer.dto.UpdateCustomer;
+import com.teckmils.warehousemanagementsystem.domain.customer.dto.CustomerItem;
 import com.teckmils.warehousemanagementsystem.domain.customer.model.Customer;
 import com.teckmils.warehousemanagementsystem.domain.customer.model.CustomerType;
 import com.teckmils.warehousemanagementsystem.domain.customer.repository.CustomerRepository;
 import com.teckmils.warehousemanagementsystem.domain.customer.repository.CustomerTypeRepository;
-import com.teckmils.warehousemanagementsystem.domain.material.dto.AddMaterialStockItem;
-import com.teckmils.warehousemanagementsystem.domain.material.model.Material;
-import com.teckmils.warehousemanagementsystem.domain.material.model.MaterialStock;
-import com.teckmils.warehousemanagementsystem.domain.product.dto.AddProductItem;
-import com.teckmils.warehousemanagementsystem.domain.product.model.Product;
-import com.teckmils.warehousemanagementsystem.domain.product.model.ProductMaterial;
-import com.teckmils.warehousemanagementsystem.domain.user.dto.UpdateUser;
-import com.teckmils.warehousemanagementsystem.domain.user.dto.UserResponse;
-import com.teckmils.warehousemanagementsystem.domain.user.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -78,21 +68,21 @@ public class CustomerService {
         );
     }
 
-    public void addCustomers(final Collection<UpdateCustomer> customerReq) {
+    public void addCustomers(final Collection<CustomerItem> customerReq) {
         customerReq.forEach(this::addSingleCustomer);
     }
 
-    private void addSingleCustomer(final UpdateCustomer updateCustomer) {
-        final CustomerType customerType = this.customerTypeRepository.findById(updateCustomer.customerType())
+    private void addSingleCustomer(final CustomerItem customerItem) {
+        final CustomerType customerType = this.customerTypeRepository.findById(customerItem.customerType())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sorry! cant find requested customer type."));
 
         var customer = new Customer(
-                updateCustomer.name(),
-                updateCustomer.contact(),
-                updateCustomer.phone(),
-                updateCustomer.email(),
-                updateCustomer.city(),
-                updateCustomer.country(),
+                customerItem.name(),
+                customerItem.contact(),
+                customerItem.phone(),
+                customerItem.email(),
+                customerItem.city(),
+                customerItem.country(),
                 customerType
                 );
 
@@ -106,7 +96,7 @@ public class CustomerService {
         return new ResponseEntity<>("User deleted successfully!", HttpStatus.OK);
     }
 
-    public ResponseEntity<String> updateCustomer(final UpdateCustomer request) {
+    public ResponseEntity<String> updateCustomer(final CustomerItem request) {
         final var email = request.email();
         return this.customerRepository.findByEmail(email)
                 .map(cust -> this.updateUser(cust,
