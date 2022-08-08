@@ -10,6 +10,7 @@ public record AddProductItem(
         @NotBlank String name,
         @NotNull Double price,
         @NotNull UUID categoryId,
-        @NotEmpty Collection<AddProductsMaterialItem> materials
+        @NotEmpty Collection<AddProductsMaterialItem> materials,
+        @NotBlank String imageURL
         ) {
 }

@@ -39,6 +39,7 @@ public class ProductService {
         products.forEach(product -> productResponse.add(new ProductResponse(
                 product.getId(),
                 product.getName(),
+                product.getImageURL(),
                 product.getPrice(),
                 product.getCalculatedProductStock(),
                 new CategoryResponse(
@@ -64,6 +65,7 @@ public class ProductService {
         return new ProductResponse(
                 product.getId(),
                 product.getName(),
+                product.getImageURL(),
                 product.getPrice(),
                 product.getCalculatedProductStock(),
                 new CategoryResponse(
@@ -79,18 +81,19 @@ public class ProductService {
         );
     }
 
-    public void addProducts(final Collection<AddProductItem> rawProducts) {
-        rawProducts.forEach(rawProduct -> {
-            final Category category = this.categoryRepository.findById(rawProduct.categoryId())
+    public void addProducts(final Collection<AddProductItem> addProdRequest) {
+        addProdRequest.forEach(prodRequest -> {
+            final Category category = this.categoryRepository.findById(prodRequest.categoryId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sorry! cant find requested category."));
 
             final var product = new Product(
-                    rawProduct.name(),
-                    rawProduct.price(),
+                    prodRequest.name(),
+                    prodRequest.price(),
+                    prodRequest.imageURL(),
                     category
             );
 
-            final Collection<ProductMaterial> productMaterials = rawProduct.materials().stream()
+            final Collection<ProductMaterial> productMaterials = prodRequest.materials().stream()
                     .map(materialItem -> {
                         final Material material = this.materialRepository.findById(materialItem.id())
                                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sorry! cant find requested material."));

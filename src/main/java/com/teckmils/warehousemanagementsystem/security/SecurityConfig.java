@@ -32,17 +32,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(final HttpSecurity http) throws
             Exception {
         http
-            .csrf().disable()
+//            .csrf().disable()
             .authorizeRequests()
             .antMatchers("/api/auth/**").permitAll()
             .antMatchers("/swagger-ui.html").permitAll()
             .antMatchers("/swagger-ui/index.html").permitAll()
             .antMatchers("/v3/api-docs").permitAll()
-            .antMatchers(HttpMethod.GET, "/api/**").authenticated()
-            .antMatchers(HttpMethod.POST, "/api/**").hasAuthority(UserRole.ADMIN)
-            .antMatchers(HttpMethod.PUT, "/api/**").hasAuthority(UserRole.ADMIN)
-            .antMatchers(HttpMethod.PATCH, "/api/**").hasAuthority(UserRole.ADMIN)
-            .antMatchers(HttpMethod.DELETE, "/api/**").hasAuthority(UserRole.ADMIN);
+                .antMatchers(HttpMethod.GET, "/api/**").permitAll();
+//            .antMatchers(HttpMethod.GET, "/api/**").authenticated()
+//            .antMatchers(HttpMethod.POST, "/api/**").hasAuthority(UserRole.ADMIN)
+//            .antMatchers(HttpMethod.PUT, "/api/**").hasAuthority(UserRole.ADMIN)
+//            .antMatchers(HttpMethod.PATCH, "/api/**").hasAuthority(UserRole.ADMIN)
+//            .antMatchers(HttpMethod.DELETE, "/api/**").hasAuthority(UserRole.ADMIN);
 
     }
 

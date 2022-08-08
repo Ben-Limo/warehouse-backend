@@ -67,6 +67,7 @@ public class TransactionService {
         transactions.forEach(transaction -> transactionResponseItems.add(
                 new TransactionResponseItem(
                         transaction.getId(),
+                        transaction.getStatus(),
                         TransactionService.mapResponseProductFromTransaction(transaction),
                         new CustomerRespItem(
                                 transaction.getCustomer().getId(),
@@ -104,6 +105,7 @@ public class TransactionService {
                 .stream().map(product -> new ProductResponse(
                         product.getProduct().getId(),
                         product.getProduct().getName(),
+                        product.getProduct().getImageURL(),
                         product.getProduct().getPrice(),
                         product.getProduct().getCalculatedProductStock(),
                         new CategoryResponse(
@@ -124,6 +126,7 @@ public class TransactionService {
 
         return new TransactionResponseItem(
                 transaction.getId(),
+                transaction.getStatus(),
                 TransactionService.mapResponseProductFromTransaction(transaction),
                 new CustomerRespItem(
                         transaction.getCustomer().getId(),
@@ -194,6 +197,7 @@ public class TransactionService {
 
         return new TransactionResponseItem(
                 updatedTransaction.getId(),
+                updatedTransaction.getStatus(),
                 TransactionService.mapResponseProductFromTransaction(transaction),
                 new CustomerRespItem(
                         customer.getId(),

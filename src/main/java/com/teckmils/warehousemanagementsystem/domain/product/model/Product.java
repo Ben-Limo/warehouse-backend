@@ -5,19 +5,22 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.swing.text.html.Option;
 import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
 @Table(name = "products")
 public class Product {
+    public static final String[] ELEMENTS = {};
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(name = "item_name", nullable = false)
     private String name;
+
+    @Column(name = "image_url")
+    private String imageURL;
 
     @Column(name = "price", nullable = false)
     private Double price;
@@ -40,9 +43,10 @@ public class Product {
     public Product() {
     }
 
-    public Product(final String name, final Double price, final Category category) {
+    public Product(final String name, final Double price, final String imageURL, final Category category) {
         this.name = name;
         this.price = price;
+        this.setImageURL(imageURL);
         this.category = category;
     }
 
@@ -93,6 +97,15 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public String getImageURL() {
+            return imageURL;
+
+     }
+
+     public void setImageURL(String imageURL) {
+            this.imageURL = imageURL;
+     }
 
     public long getCalculatedProductStock() {
         final Collection<Long> listOfPossibleProducts = new ArrayList<>();

@@ -10,6 +10,7 @@ import java.util.UUID;
 
 public record TransactionResponseItem(
         UUID id,
+        String status,
         Collection<ProductResponse> products,
         CustomerRespItem customer,
         UserResponse user,
