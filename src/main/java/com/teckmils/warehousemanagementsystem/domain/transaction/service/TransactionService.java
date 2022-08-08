@@ -19,8 +19,10 @@ import com.teckmils.warehousemanagementsystem.domain.product.model.Product;
 import com.teckmils.warehousemanagementsystem.domain.product.repository.ProductRepository;
 import com.teckmils.warehousemanagementsystem.domain.transaction.TransactionStatus;
 import com.teckmils.warehousemanagementsystem.domain.transaction.dto.TransactionResponseItem;
+import com.teckmils.warehousemanagementsystem.domain.transaction.model.PaymentMethod;
 import com.teckmils.warehousemanagementsystem.domain.transaction.model.Transaction;
 import com.teckmils.warehousemanagementsystem.domain.transaction.model.TransactionProduct;
+import com.teckmils.warehousemanagementsystem.domain.transaction.repository.PaymentMethodRepository;
 import com.teckmils.warehousemanagementsystem.domain.transaction.repository.TransactionProductRepository;
 import com.teckmils.warehousemanagementsystem.domain.transaction.repository.TransactionRepository;
 import com.teckmils.warehousemanagementsystem.domain.user.dto.UserResponse;
@@ -45,19 +47,23 @@ public class TransactionService {
 
     private final CustomerTypeRepository customerTypeRepository;
 
+    private final PaymentMethodRepository paymentMethodRepository;
+
     public TransactionService(
             TransactionRepository transactionRepository,
             TransactionProductRepository transactionProductRepository,
             ProductRepository productRepository,
             UserRepository userRepository,
             CustomerRepository customerRepository,
-            CustomerTypeRepository customerTypeRepository) {
+            CustomerTypeRepository customerTypeRepository,
+            PaymentMethodRepository paymentMethodRepository) {
         this.transactionRepository = transactionRepository;
         this.transactionProductRepository = transactionProductRepository;
         this.productRepository = productRepository;
         this.userRepository = userRepository;
         this.customerRepository = customerRepository;
         this.customerTypeRepository = customerTypeRepository;
+        this.paymentMethodRepository = paymentMethodRepository;
     }
 
     public List<TransactionResponseItem> getTransactions() {
@@ -68,6 +74,7 @@ public class TransactionService {
                 new TransactionResponseItem(
                         transaction.getId(),
                         transaction.getStatus(),
+                        transaction.getPaymentMethod().getItemName(),
                         TransactionService.mapResponseProductFromTransaction(transaction),
                         new CustomerRespItem(
                                 transaction.getCustomer().getId(),
@@ -127,6 +134,7 @@ public class TransactionService {
         return new TransactionResponseItem(
                 transaction.getId(),
                 transaction.getStatus(),
+                transaction.getPaymentMethod().getItemName(),
                 TransactionService.mapResponseProductFromTransaction(transaction),
                 new CustomerRespItem(
                         transaction.getCustomer().getId(),
@@ -165,7 +173,10 @@ public class TransactionService {
         final Customer customer = this.customerRepository.findById(request.customerId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        final var transaction = new Transaction(TransactionStatus.PENDING, customer, currentUser);
+        final PaymentMethod paymentMethod = this.paymentMethodRepository.findByItemName(request.paymentMethod())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        final var transaction = new Transaction(TransactionStatus.PENDING, paymentMethod, customer, currentUser);
 
         final HashMap<UUID, Long> requestedProductQty = new HashMap<>();
         final Collection<UUID> requestedProductIDs = new ArrayList<>();
@@ -198,6 +209,7 @@ public class TransactionService {
         return new TransactionResponseItem(
                 updatedTransaction.getId(),
                 updatedTransaction.getStatus(),
+                updatedTransaction.getPaymentMethod().getItemName(),
                 TransactionService.mapResponseProductFromTransaction(transaction),
                 new CustomerRespItem(
                         customer.getId(),

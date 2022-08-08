@@ -1,6 +1,7 @@
 package com.teckmils.warehousemanagementsystem.domain.transaction.model;
 
 import com.teckmils.warehousemanagementsystem.domain.customer.model.Customer;
+import com.teckmils.warehousemanagementsystem.domain.user.model.Role;
 import com.teckmils.warehousemanagementsystem.domain.user.model.User;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -41,11 +42,16 @@ public class Transaction {
     @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<TransactionProduct> transactionProducts;
 
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "payment_method", referencedColumnName = "id")
+    private PaymentMethod paymentMethod;
+
     public Transaction() {
     }
 
-    public Transaction(String status, Customer customer, User user) {
+    public Transaction(String status,PaymentMethod paymentMethod, Customer customer, User user) {
         this.status = status;
+        this.paymentMethod = paymentMethod;
         this.customer = customer;
         this.user = user;
     }
@@ -64,6 +70,10 @@ public class Transaction {
 
     public String getStatus() {
         return status;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
     }
 
     public Customer getCustomer() {

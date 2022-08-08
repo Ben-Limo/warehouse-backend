@@ -11,6 +11,7 @@ import java.util.UUID;
 public record TransactionResponseItem(
         UUID id,
         String status,
+        String paymentMethod,
         Collection<ProductResponse> products,
         CustomerRespItem customer,
         UserResponse user,

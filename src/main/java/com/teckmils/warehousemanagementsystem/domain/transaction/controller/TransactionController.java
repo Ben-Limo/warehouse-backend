@@ -2,16 +2,11 @@ package com.teckmils.warehousemanagementsystem.domain.transaction.controller;
 
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 
-import com.teckmils.warehousemanagementsystem.domain.customer.dto.CustomerItem;
-import com.teckmils.warehousemanagementsystem.domain.product.dto.AddProduct;
 import com.teckmils.warehousemanagementsystem.domain.product.dto.SellProducts;
-import com.teckmils.warehousemanagementsystem.domain.transaction.dto.CreateTransactionItem;
 import com.teckmils.warehousemanagementsystem.domain.transaction.dto.TransactionResponseItem;
-import com.teckmils.warehousemanagementsystem.domain.transaction.model.Transaction;
 import com.teckmils.warehousemanagementsystem.domain.transaction.service.TransactionService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
