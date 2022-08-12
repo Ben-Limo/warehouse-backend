@@ -3,7 +3,7 @@ package com.teckmils.warehousemanagementsystem.domain.user.dto;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public record UserResponse(UUID uid,
+public record UserResponse(UUID id,
                            String userName,
                            String firstName,
                            String lastName,

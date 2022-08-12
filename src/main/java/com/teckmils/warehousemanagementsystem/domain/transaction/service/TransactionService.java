@@ -2,6 +2,7 @@ package com.teckmils.warehousemanagementsystem.domain.transaction.service;
 
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -66,8 +67,8 @@ public class TransactionService {
         this.paymentMethodRepository = paymentMethodRepository;
     }
 
-    public List<TransactionResponseItem> getTransactions() {
-        final List<Transaction> transactions = this.transactionRepository.findAll();
+    public List<TransactionResponseItem> getTransactions(Timestamp startDate, Timestamp endDate) {
+        final List<Transaction> transactions = this.transactionRepository.findByCreatedAtBetween(startDate, endDate);
         List<TransactionResponseItem> transactionResponseItems = new ArrayList<>();
 
         transactions.forEach(transaction -> transactionResponseItems.add(

@@ -1,6 +1,7 @@
 package com.teckmils.warehousemanagementsystem.domain.transaction.repository;
 
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -16,6 +17,8 @@ public interface TransactionRepository extends CrudRepository<Transaction, UUID>
     Optional<Transaction> findById(UUID id);
 
     List<Transaction> findAll();
+
+    List<Transaction> findByCreatedAtBetween(Timestamp startDate, Timestamp endDate);
 
     void deleteById(@NonNull UUID uid);
 }
